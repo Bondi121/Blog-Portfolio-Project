@@ -51,11 +51,26 @@ def user_profile(id):
     if user is None:
         return "no user found"
     return "User Profile"
-    
 
-@app.route('/update_user', methods=['PUT'])
-def update():
+
+@app.route('/update_user/<id>', methods=['PUT'])
+def update(id):
+    user_data = request.json
+    firstname = user_data.get('firstname')
+    lastname = user_data.get('lastname')
+    email = user_data.get('email')
+    user = User.query.filter_by(id=id).first()
+    #https://flask-sqlalchemy.palletsprojects.com/en/2.x/queries/
+    if firstname is not None:
+        user.first_name = firstname
+    if lastname is not None:
+        user.last_name = lastname
+    if email is not None:
+        user.email = email
+    
+    db.session.commit()
     return "User update"
+    
 
 
 @app.route('/delete_user', methods=['DELETE'])
