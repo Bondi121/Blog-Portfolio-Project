@@ -42,14 +42,16 @@ def register():
         user = User(first_name = firstname, last_name = lastname, username = username, email = email)
         db.session.add(user) 
         db.session.commit()
-    print(user_data)
     return "Registration"
 
 
 @app.route('/profile/<id>', methods=['GET'])
 def user_profile(id):
+    user = User.query.filter_by(id=id).first()
+    if user is None:
+        return "no user found"
     return "User Profile"
-
+    
 
 @app.route('/update_user', methods=['PUT'])
 def update():
