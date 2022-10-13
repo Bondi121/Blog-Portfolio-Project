@@ -15,3 +15,8 @@ what goes into local storage and what goes in the backend storage
 text file, csv file, sql
 
 blogwebsite upload real
+
+
+
+Object relational mapper like sqlalchemy to create schema
+--> Ask tutor
