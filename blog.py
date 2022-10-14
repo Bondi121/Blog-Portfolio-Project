@@ -107,13 +107,23 @@ def user_post():
 
 
 @app.route('/post/<id>')
-def get_post():
+def get_post(id):
+    post = Post.query.filter_by(id=id).first()
+    if post is None:
+        return "no post is found"
     return "Post id"
 
 
-@app.route('/delete_post', methods=['DELETE'])
-def delete_post():
-    return "Delete Post"
+@app.route('/delete_post/<id>', methods=['DELETE'])
+def delete_post(id):
+    post = Post.query.filter_by(id=id).first()
+    if post:
+        db.session.delete(post)
+        db.session.commit()
+        return "Post deleted"
+    else:
+        return "Post not found"
+   
 
 
 @app.route('/update_post', methods=['PUT'])
