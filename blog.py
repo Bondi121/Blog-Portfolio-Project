@@ -1,3 +1,4 @@
+from datetime import datetime
 from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 import os 
@@ -6,7 +7,6 @@ app = Flask(__name__)
 db = SQLAlchemy()
 basedir = os.path.abspath(os.path.dirname('1800 Final Project Blog Post'))
 app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///' + os.path.join(basedir, 'blog.sqlite')
-print(basedir)
 
 db.init_app(app)
 
@@ -18,6 +18,13 @@ class User(db.Model):
     username = db.Column(db.String, unique=True, nullable=False)
     address = db.Column(db.String, unique=True, nullable=True)
     email = db.Column(db.String, unique=True, nullable=False)
+
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String, nullable=False)
+    content = db.Column(db.String, nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False)
+    user_id = db.Column(db.Integer, nullable=False)
 
 
 #Creating tables        
@@ -87,6 +94,15 @@ def delete_user(id):
 
 @app.route('/create_post', methods=['POST'])
 def user_post():
+    post_data = request.json
+    title = post_data.get('title')
+    content = post_data.get('content')
+    date_posted = post_data.get('date_posted')
+    user_id = post_data.get('user_id')
+    if request.method == 'POST':
+        post = Post(title=title, content=content, date_posted=date_posted, user_id=user_id)
+        db.session.add(post)
+        db.session.commit()
     return "User Post"
 
 
