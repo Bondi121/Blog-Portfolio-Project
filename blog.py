@@ -73,9 +73,15 @@ def update(id):
     
 
 
-@app.route('/delete_user', methods=['DELETE'])
-def delete_user():
-    return "Delete user"
+@app.route('/delete_user/<id>', methods=['DELETE'])
+def delete_user(id):
+    user = User.query.filter_by(id=id).first()
+    if user:
+        db.session.delete(user)
+        db.session.commit()
+        return "User deleted"
+    else:
+        return "User not found"
 
 #Posts Endpoints
 
