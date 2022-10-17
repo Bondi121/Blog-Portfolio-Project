@@ -2,3 +2,8 @@
 .venv
 env/
 venv/
+
+__pycache__/
+
+*.sqlite
+blog.sqlite
