@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import Flask, request
+from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 import os 
 
@@ -25,7 +25,7 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
     content = db.Column(db.String, nullable=False)
-    date_posted = db.Column(db.DateTime, nullable=False)
+    date_posted = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     user_id = db.Column(db.Integer, nullable=False)
 
 #Define Models 
@@ -40,7 +40,8 @@ with app.app_context():
 
 @app.route('/homepage')
 def home():
-    return "Hello World"
+    user_blogs = Post.query.all()
+    return render_template("index.html",blogs=user_blogs)
 
 
 #Users Endpoints
@@ -106,10 +107,9 @@ def user_post():
     post_data = request.json
     title = post_data.get('title')
     content = post_data.get('content')
-    date_posted = post_data.get('date_posted')
     user_id = post_data.get('user_id')
     if request.method == 'POST':
-        post = Post(title=title, content=content, date_posted=date_posted, user_id=user_id)
+        post = Post(title=title, content=content, user_id=user_id)
         db.session.add(post)
         db.session.commit()
     return "User Post"
