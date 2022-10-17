@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog post</title>
+</head>
+<body>
+    <container>
+
+        <nav>
+            <a href="">My Blog Website</a>
+            <a href="">anonymous user</a>
+        </nav>
+
+        <main>
+
+            <h1>Latest Posts</h1>
+            <p>Posts created by different users</p>
+
+            {% for blog in blogs %}
+            <article>
+            <h2>{{blog.title}}</h2>
+            <p>{{blog.content}}</p>
+            </article>
+            {% endfor %}
+            
+        </main>
+
+        <footer></footer>
+    </container>
+
+
+</body>
+</html>
