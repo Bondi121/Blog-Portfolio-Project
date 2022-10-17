@@ -9,6 +9,8 @@ basedir = os.path.abspath(os.path.dirname('1800 Final Project Blog Post'))
 app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///' + os.path.join(basedir, 'blog.sqlite')
 
 db.init_app(app)
+#Create your Flask application object, load any config, and then initialize the SQLAlchemy extension class with the application by calling db.init_app. This example connects to a SQLite database, which is stored in the app’s instance folder.
+#https://flask-sqlalchemy.palletsprojects.com/en/3.0.x/quickstart/#installation
 
 class User(db.Model):
     #Creating user table schema
@@ -26,8 +28,12 @@ class Post(db.Model):
     date_posted = db.Column(db.DateTime, nullable=False)
     user_id = db.Column(db.Integer, nullable=False)
 
+#Define Models 
+#https://flask-sqlalchemy.palletsprojects.com/en/3.0.x/quickstart/#define-models
 
-#Creating tables        
+
+#Creating tables   
+#https://flask-sqlalchemy.palletsprojects.com/en/3.0.x/quickstart/#create-the-tables     
 with app.app_context():
     db.create_all()
 
@@ -35,6 +41,7 @@ with app.app_context():
 @app.route('/homepage')
 def home():
     return "Hello World"
+
 
 #Users Endpoints
 
@@ -49,7 +56,9 @@ def register():
         user = User(first_name = firstname, last_name = lastname, username = username, email = email)
         db.session.add(user) 
         db.session.commit()
+        #https://flask-sqlalchemy.palletsprojects.com/en/2.x/queries/#inserting-records
     return "Registration"
+
 
 
 @app.route('/profile/<id>', methods=['GET'])
@@ -61,7 +70,7 @@ def user_profile(id):
 
 
 @app.route('/update_user/<id>', methods=['PUT'])
-def update(id):
+def update_user(id):
     user_data = request.json
     firstname = user_data.get('firstname')
     lastname = user_data.get('lastname')
@@ -126,9 +135,21 @@ def delete_post(id):
    
 
 
-@app.route('/update_post', methods=['PUT'])
-def update_post():
-    return "Update Post"
+@app.route('/update_post/<id>', methods=['PUT'])
+def update_post(id):
+    post_data = request.json
+    title = post_data.get('title')
+    content = post_data.get('content')
+    date_posted = post_data.get('date_posted')
+    user_id = post_data.get('user_id')
+    post = Post.query.filter_by(id=id).first()
+    if title is not None:
+        post.title = title
+    if content is not None:
+        post.content = content
+
+    db.session.commit()
+    return "Post Update"
 
 
 
