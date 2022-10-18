@@ -7,12 +7,13 @@
     <title>Creating Post</title>
 </head>
 <body>
-    <div>id
-        <form action="/">
+    <div>
+        <form action="/create_post" method="post">
             <label for="title">Post Title:</label><br>
             <input type="text" id="title" name="title"><br>
             <label for="content">Post Content:</label><br>
-            <textarea id="content"></textarea>
+            <textarea id="content" name="content"></textarea>
+            <input type="number" id="user_id" name="user_id" hidden value="1">
             <input type="submit" value="Submit">
         </form>
     </div>

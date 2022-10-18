@@ -1,4 +1,5 @@
 from datetime import datetime
+from pickle import NONE
 from flask import Flask, request, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 import os 
@@ -111,17 +112,19 @@ def delete_user(id):
 
 #Posts Endpoints
 
-@app.route('/create_post', methods=['POST'])
+@app.route('/create_post', methods=['POST', 'GET'])
 def user_post():
-    post_data = request.json
-    title = post_data.get('title')
-    content = post_data.get('content')
-    user_id = post_data.get('user_id')
-    if request.method == 'POST':
+    title = request.form.get('title')
+    content = request.form.get('content')
+    user_id = request.form.get('user_id')
+    user = User.query.filter_by(id=user_id).first()
+    if request.method == 'POST' and user is not None:
         post = Post(title=title, content=content, user_id=user_id)
         db.session.add(post)
         db.session.commit()
-    return "User Post"
+        return redirect(url_for('home'))
+    return render_template('create_post.html')
+
 
 
 @app.route('/post/<id>')
