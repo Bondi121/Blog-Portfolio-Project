@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 import os 
 
@@ -41,25 +41,34 @@ with app.app_context():
 @app.route('/homepage')
 def home():
     user_blogs = Post.query.all()
+    print(user_blogs)
     return render_template("index.html",blogs=user_blogs)
 
 
 #Users Endpoints
 
-@app.route('/registration', methods=['POST'])
+@app.route('/registration', methods=['POST', 'GET'])
 def register():
-    user_data = request.json
-    firstname = user_data.get('firstname')
-    lastname = user_data.get('lastname')
-    username = user_data.get('username')
-    email = user_data.get('email')
+    firstname = request.form.get('firstname')
+    lastname = request.form.get('lastname')
+    username = request.form.get('username')
+    email = request.form.get('email')
     if request.method == 'POST':
         user = User(first_name = firstname, last_name = lastname, username = username, email = email)
         db.session.add(user) 
         db.session.commit()
         #https://flask-sqlalchemy.palletsprojects.com/en/2.x/queries/#inserting-records
-    return "Registration"
+    return render_template("register.html")
 
+@app.route('/login', methods=['POST', 'GET'])
+def login():
+    username = request.form.get('username')
+    if request.method == 'POST':
+        user = User.query.filter_by(username=username).first()
+
+        if user:
+            return redirect(url_for('home'))
+    return render_template('login.html')
 
 
 @app.route('/profile/<id>', methods=['GET'])
@@ -67,7 +76,7 @@ def user_profile(id):
     user = User.query.filter_by(id=id).first()
     if user is None:
         return "no user found"
-    return "User Profile"
+    return render_template("profile.html")
 
 
 @app.route('/update_user/<id>', methods=['PUT'])

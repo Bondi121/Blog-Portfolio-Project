@@ -11,12 +11,17 @@
 
         <nav>
             <a href="">My Blog Website</a>
-            <a href="">anonymous user</a>
+            <a href="">user login</a>
+            <p>last seen : </p>
+            <a href="">create a new post </p>
+            
+        
         </nav>
+
 
         <main>
 
-            <h1>Latest Posts</h1>
+            <h2>Latest Posts</h2>
             <p>Posts created by different users</p>
 
             {% for blog in blogs %}
@@ -25,6 +30,8 @@
             <p>{{blog.content}}</p>
             </article>
             {% endfor %}
+
+
             
         </main>
 
