@@ -11,15 +11,21 @@
         <main>
             <section>
                 <form action="{{url_for('update_user', id=user_details.id) }}" method="post">
+
                     <label for="firstname_update">First name</label><br>
                     <input type="text" id="firstname_update" name="firstname" value="{{user_details.first_name}}"><br>
+
                     <label for="lastname_update">Last name</label><br>
                     <input type="text" id="lastname_update" name="lastname" value="{{user_details.last_name}}"><br>
+
                     <label for="address_update">Address</label><br>
                     <input type="text" id="address_update" name="address" value="{{user_details.address}}"><br>
+
                     <label for="email_update">Email</label><br>
                     <input type="text" id="email_update" name="email" value="{{user_details.email}}"><br>
+
                     <input type="submit" value="Save">
+                    
                 </form>
             </section>
         </main>

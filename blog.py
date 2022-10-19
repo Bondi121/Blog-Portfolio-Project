@@ -1,5 +1,6 @@
 from datetime import datetime
 from pickle import NONE
+from turtle import title
 from flask import Flask, request, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 import os 
@@ -114,7 +115,9 @@ def delete_user(id):
     else:
         return "User not found"
 
+
 #Posts Endpoints
+
 
 @app.route('/create_post', methods=['POST', 'GET'])
 def user_post():
@@ -140,33 +143,42 @@ def get_post(title):
 #https://docs.sqlalchemy.org/en/14/orm/quickstart.html
 #https://devsheet.com/code-snippet/like-query-sqlalchemy/
 
-@app.route('/delete_post/<id>', methods=['DELETE'])
-def delete_post(id):
+@app.route('/search_post')
+def search_post():
+    title = request.form.get('title')
+    post = Post.query.filter(Post.title.like(f'%{title}%')).order_by(Post.id.desc()).all()
+    if post is None:
+        return "no post is found"
+    return render_template('get_post.html', post_details=post)
+
+
+@app.route('/delete_post/<id>/<user_id>', methods=['DELETE'])
+def delete_post(id, user_id):
     post = Post.query.filter_by(id=id).first()
-    if post:
+    user = User.query.filter_by(id=user_id).first()
+    if post and post.user_id == user.id:
         db.session.delete(post)
         db.session.commit()
-        return "Post deleted"
+        return redirect(url_for('home')) 
     else:
         return "Post not found"
-   
 
 
-@app.route('/update_post/<id>', methods=['PUT'])
+@app.route('/update_post/<id>', methods=['POST', 'GET'])
 def update_post(id):
     title = request.form.get('title')
     content = request.form.get('content')
-    date_posted = request.form.get('date_posted')
-    user_id = request.form.get('user_id')
     post = Post.query.filter_by(id=id).first()
-    if title is not None:
-        post.title = title
-    if content is not None:
-        post.content = content
-
-    db.session.commit()
-    return "Post Update"
-
+    if post is None:
+        return redirect(url_for('home'))
+    if request.method == 'POST': 
+        if title is not None:
+            post.title = title
+        if content is not None:
+            post.content = content
+        db.session.commit()
+        return redirect (url_for('get_post' , title = post.title))
+    return render_template("post_update.html", post_details=post)
 
 
 #python -m venv venv
