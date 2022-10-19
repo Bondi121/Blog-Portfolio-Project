@@ -42,7 +42,6 @@ with app.app_context():
 @app.route('/homepage')
 def home():
     user_blogs = Post.query.all()
-    print(user_blogs)
     return render_template("index.html",blogs=user_blogs)
 
 
@@ -76,27 +75,32 @@ def login():
 def user_profile(id):
     user = User.query.filter_by(id=id).first()
     if user is None:
-        return "no user found"
-    return render_template("profile.html")
+        return redirect(url_for('home'))
+    return render_template("profile.html", user_details=user)
 
 
-@app.route('/update_user/<id>', methods=['PUT'])
+@app.route('/update_user/<id>', methods=['POST', 'GET'])
 def update_user(id):
-    user_data = request.json
-    firstname = user_data.get('firstname')
-    lastname = user_data.get('lastname')
-    email = user_data.get('email')
+    firstname = request.form.get('firstname')
+    lastname = request.form.get('lastname')
+    email = request.form.get('email')
+    address = request.form.get('address')
     user = User.query.filter_by(id=id).first()
+    if user is None:
+        return redirect(url_for('home'))
     #https://flask-sqlalchemy.palletsprojects.com/en/2.x/queries/
-    if firstname is not None:
-        user.first_name = firstname
-    if lastname is not None:
-        user.last_name = lastname
-    if email is not None:
-        user.email = email
-    
-    db.session.commit()
-    return "User update"
+    if request.method == 'POST': 
+        if firstname is not None:
+            user.first_name = firstname
+        if lastname is not None:
+            user.last_name = lastname
+        if address is not None:
+            user.address = address
+        if email is not None:
+            user.email = email
+        db.session.commit()
+        return redirect (url_for('user_profile' , id=user.id))
+    return render_template("user_update.html", user_details=user)
     
 
 
@@ -124,7 +128,6 @@ def user_post():
         db.session.commit()
         return redirect(url_for('home'))
     return render_template('create_post.html')
-
 
 
 @app.route('/post/<id>')
