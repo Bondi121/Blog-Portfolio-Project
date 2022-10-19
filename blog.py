@@ -41,7 +41,7 @@ with app.app_context():
 
 @app.route('/homepage')
 def home():
-    user_blogs = Post.query.all()
+    user_blogs = Post.query.order_by(Post.id.desc()).all()
     return render_template("index.html",blogs=user_blogs)
 
 
@@ -130,13 +130,15 @@ def user_post():
     return render_template('create_post.html')
 
 
-@app.route('/post/<id>')
-def get_post(id):
-    post = Post.query.filter_by(id=id).first()
+@app.route('/post/<title>')
+def get_post(title):
+    post = Post.query.filter(Post.title.like(f'%{title}%')).order_by(Post.id.desc()).all()
     if post is None:
         return "no post is found"
-    return "Post id"
-
+    return render_template('get_post.html', post_details=post)
+    
+#https://docs.sqlalchemy.org/en/14/orm/quickstart.html
+#https://devsheet.com/code-snippet/like-query-sqlalchemy/
 
 @app.route('/delete_post/<id>', methods=['DELETE'])
 def delete_post(id):
@@ -152,11 +154,10 @@ def delete_post(id):
 
 @app.route('/update_post/<id>', methods=['PUT'])
 def update_post(id):
-    post_data = request.json
-    title = post_data.get('title')
-    content = post_data.get('content')
-    date_posted = post_data.get('date_posted')
-    user_id = post_data.get('user_id')
+    title = request.form.get('title')
+    content = request.form.get('content')
+    date_posted = request.form.get('date_posted')
+    user_id = request.form.get('user_id')
     post = Post.query.filter_by(id=id).first()
     if title is not None:
         post.title = title
