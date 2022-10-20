@@ -15,14 +15,12 @@
  -->
 
         <nav>
-            <a href="">My Blog Website</a>
-            <a href="">user login</a>
-            <p>last seen : </p>
-            <a href="">create a new post </p>
+            <a href="/homepage">My Blog Website</a>
+            <a href="/login">user login</a>
+            <a href="/create_post">create a new post</a>
+            <button id="identity">Anonymous</button>
         </nav>
-
-
-            
+        
   <!--   
         <form action="/" method="post">
             <label for="title">Search by Title:</label><br>
@@ -31,16 +29,10 @@
         </form>
  -->
 
-             
-
-
-
-
+            
 
         <main>
-
-            <h2>Latest Posts</h2>
-            <p>Posts created by different users</p>
+            <p>User latest post</p>
 
             {% for blog in blogs %}
             <article>
@@ -57,9 +49,12 @@
             
         </main>
 
-        <footer></footer>
+        <footer>
+            created by gabriel
+        </footer>
     </container>
 
+    <script src="{{url_for('static', filename='index.js')}}"></script>
 
 </body>
 </html>

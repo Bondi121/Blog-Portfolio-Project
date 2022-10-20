@@ -7,6 +7,11 @@
     <title>Creating Post</title>
 </head>
 <body>
+    <div class="container">
+        <nav>
+            <a href="/homepage">My Blog Website</a>
+        </nav>
+    </div>
     <div>
         <form action="/create_post" method="post">
 
@@ -21,5 +26,8 @@
 
         </form>
     </div>
+
+    <script src="{{url_for('static', filename='index.js')}}"></script>
+
 </body>
 </html>

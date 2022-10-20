@@ -4,10 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Profile page</title>
+    {{ moment.include_moment() }}
 </head>
 <body>
     <div class="container">
+        <nav>
+            <a href="/homepage">My Blog Website</a>
+            <a href="/create_post">create a new post </a>
+        </nav>
         <main>
         
             <h1>User profile page</h1>
@@ -21,8 +26,8 @@
                 <p class="email">Email: {{user_details.email}}</p>
             </section>
 
+            <h2>User's posts</h2>
             <section>
-                <h2>User's posts</h2>
                 {% for blog in blogs %}
                 <article>
                     <a href="{{url_for('get_post', title=blog.title) }}"><h2>{{blog.title}}</h2></a>
@@ -33,5 +38,8 @@
 
         </main>
     </div>
+
+    <script src="{{url_for('static', filename='index.js')}}"></script>
+
 </body>
 </html>

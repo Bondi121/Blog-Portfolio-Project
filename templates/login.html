@@ -8,9 +8,12 @@
 </head>
 <body>
     <div class="container">
+        <nav>
+            <a href="/homepage">My Blog Website</a><br>
+        </nav>
         <main>
             <div class="login">
-                <form action="/login" method="post">
+                <form action="/login" method="post" id="form_login">
                     <label for="username_login">Username</label><br>
                     <input type="text" id="username_login" name="username">
                     <input type="submit" value="Submit" id="submit_button">
@@ -18,6 +21,10 @@
             </div>
         </main>
     </div>
+
+
+
+    <script src="{{url_for('static', filename='index.js')}}"></script>
     
 </body>
 </html>

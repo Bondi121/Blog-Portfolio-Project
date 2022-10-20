@@ -1,6 +1,4 @@
 from datetime import datetime
-from pickle import NONE
-from turtle import title
 from flask import Flask, request, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 import os 
