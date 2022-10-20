@@ -5,9 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog post</title>
+    {{ moment.include_moment() }}
 </head>
 <body>
     <container>
+
+  <!--   
+    https://flask-moment.readthedocs.io/en/latest/quickstart.html#installation-and-configuration
+ -->
 
         <nav>
             <a href="">My Blog Website</a>
@@ -15,6 +20,8 @@
             <p>last seen : </p>
             <a href="">create a new post </p>
         </nav>
+
+
             
   <!--   
         <form action="/" method="post">
@@ -24,6 +31,11 @@
         </form>
  -->
 
+             
+
+
+
+
 
         <main>
 
@@ -32,8 +44,9 @@
 
             {% for blog in blogs %}
             <article>
-            <h2>{{blog.title}}</h2>
-            <p>{{blog.content}}</p>
+                
+                <a href="{{url_for('get_post', title=blog.title) }}"><h2>{{blog.title}}</h2></a>
+                <p>Post created at: {{ moment(blog.date_posted).format('MMMM Do YYYY, h:mm a') }}.</p>
             </article>
             {% endfor %}
             

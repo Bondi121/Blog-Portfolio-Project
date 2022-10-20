@@ -4,12 +4,13 @@ from turtle import title
 from flask import Flask, request, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 import os 
+from flask_moment import Moment
 
 app = Flask(__name__)
 db = SQLAlchemy()
 basedir = os.path.abspath(os.path.dirname('1800 Final Project Blog Post'))
 app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///' + os.path.join(basedir, 'blog.sqlite')
-
+moment = Moment(app)
 db.init_app(app)
 #Create your Flask application object, load any config, and then initialize the SQLAlchemy extension class with the application by calling db.init_app. This example connects to a SQLite database, which is stored in the app’s instance folder.
 #https://flask-sqlalchemy.palletsprojects.com/en/3.0.x/quickstart/#installation
@@ -61,23 +62,27 @@ def register():
         #https://flask-sqlalchemy.palletsprojects.com/en/2.x/queries/#inserting-records
     return render_template("register.html")
 
+
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     username = request.form.get('username')
     if request.method == 'POST':
         user = User.query.filter_by(username=username).first()
-
         if user:
             return redirect(url_for('home'))
+        if user is None:
+            return "No user found"
     return render_template('login.html')
 
 
-@app.route('/profile/<id>', methods=['GET'])
-def user_profile(id):
-    user = User.query.filter_by(id=id).first()
+@app.route('/profile/<username>', methods=['GET'])
+def user_profile(username):
+    user = User.query.filter_by(username=username).first()
+    if user:
+        posts = Post.query.filter_by(user_id=user.id).all()
     if user is None:
         return redirect(url_for('home'))
-    return render_template("profile.html", user_details=user)
+    return render_template("profile.html", user_details=user, blogs=posts)
 
 
 @app.route('/update_user/<id>', methods=['POST', 'GET'])

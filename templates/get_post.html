@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    {{ moment.include_moment() }}
 </head>
 <body>
     <div class="container">
@@ -14,6 +15,7 @@
                 <article>
                 <h2>{{post.title}}</h2>
                 <p>{{post.content}}</p>
+                <p>Post created at: {{ moment(post.date_posted).format('MMMM Do YYYY, h:mm a') }}.</p>
                 </article>
                 {% endfor %}
             </section>

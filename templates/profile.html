@@ -22,26 +22,13 @@
             </section>
 
             <section>
-                <h2>User's posts </h2>
+                <h2>User's posts</h2>
+                {% for blog in blogs %}
                 <article>
-                    <h2>New game realease</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At totam placeat debitis assumenda veritatis sed magni omnis blanditiis reprehenderit facere explicabo beatae quaerat, quos nostrum, repellat illo ad, consectetur quo.</p>
+                    <a href="{{url_for('get_post', title=blog.title) }}"><h2>{{blog.title}}</h2></a>
+                    <p>Post created at: {{ moment(blog.date_posted).format('MMMM Do YYYY, h:mm a') }}.</p>
                 </article>
-
-                <article>
-                    <h2>New game realease</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At totam placeat debitis assumenda veritatis sed magni omnis blanditiis reprehenderit facere explicabo beatae quaerat, quos nostrum, repellat illo ad, consectetur quo.</p>
-                </article>
-
-                <article>
-                    <h2>New game realease</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At totam placeat debitis assumenda veritatis sed magni omnis blanditiis reprehenderit facere explicabo beatae quaerat, quos nostrum, repellat illo ad, consectetur quo.</p>
-                </article>
-
-                <article>
-                    <h2>New game realease</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At totam placeat debitis assumenda veritatis sed magni omnis blanditiis reprehenderit facere explicabo beatae quaerat, quos nostrum, repellat illo ad, consectetur quo.</p>
-                </article>
+                {% endfor %}
             </section>
 
         </main>
