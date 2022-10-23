@@ -6,8 +6,12 @@ function loginFunction(username) {
         return undefined
     }
     else {
-        fetch ()
-        localStorage.setItem ("username", username)
+        fetch ("http://127.0.0.1:5000/check_user/" + username)
+        .then(function (response) {
+            if (response.status === 200) {
+                localStorage.setItem ("username", username)
+            }
+        })
         return true
     }
 };

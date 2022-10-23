@@ -83,13 +83,23 @@ def user_profile(username):
     return render_template("profile.html", user_details=user, blogs=posts)
 
 
-@app.route('/update_user/<id>', methods=['POST', 'GET'])
-def update_user(id):
+@app.route('/check_user/<username>', methods=['GET'])
+def check_user(username):
+    user = User.query.filter_by(username=username).first()
+    if user:
+        posts = Post.query.filter_by(user_id=user.id).all()
+    if user is None:
+        return {"status" : "No user found"}, 404
+    return {"status" : "User found"}, 200
+
+
+@app.route('/update_user/<username>', methods=['POST', 'GET'])
+def update_user(username):
     firstname = request.form.get('firstname')
     lastname = request.form.get('lastname')
     email = request.form.get('email')
     address = request.form.get('address')
-    user = User.query.filter_by(id=id).first()
+    user = User.query.filter_by(username=username).first()
     if user is None:
         return redirect(url_for('home'))
     #https://flask-sqlalchemy.palletsprojects.com/en/2.x/queries/
@@ -103,7 +113,7 @@ def update_user(id):
         if email is not None:
             user.email = email
         db.session.commit()
-        return redirect (url_for('user_profile' , id=user.id))
+        return redirect (url_for('user_profile' , username=user.username))
     return render_template("user_update.html", user_details=user)
     
 

@@ -16,8 +16,9 @@
 
         <nav>
             <a href="/homepage">My Blog Website</a>
-            <a href="/login">user login</a>
-            <a href="/create_post">create a new post</a>
+            <a href="/login">User login</a>
+            <a href="/profile" id="profile_id">User profile</a>
+            <a href="/create_post" id="create_post_id">create a new post</a>
             <button id="identity">Anonymous</button>
         </nav>
         
@@ -32,7 +33,7 @@
             
 
         <main>
-            <p>User latest post</p>
+            <p>All the posts</p>
 
             {% for blog in blogs %}
             <article>
