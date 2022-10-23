@@ -1,6 +1,8 @@
 const identity = document.getElementById("identity");
 const create_post = document.getElementById("create_post_id");
 const profile_id = document.getElementById("profile_id");
+const registration_id = document.getElementById("registration_id")
+const login_id = document.getElementById("login_id")
 
 function changeIdentity() {
     if (localStorage.getItem("username")) {
@@ -24,11 +26,19 @@ function enableProfile() {
     }
 }
 
+function disableLogin () {
+    if (localStorage.getItem("username")) {
+        registration_id.style.display = "none"
+        login_id.style.display = "none"
+    }
+}
+
 
 
 changeIdentity();
 enablePost();
 enableProfile()
+disableLogin();
 // loginFunction(username.value);
 
 
