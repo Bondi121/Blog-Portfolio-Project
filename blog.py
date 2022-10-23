@@ -57,6 +57,7 @@ def register():
         user = User(first_name = firstname, last_name = lastname, username = username, email = email)
         db.session.add(user) 
         db.session.commit()
+        return redirect(url_for('login'))
         #https://flask-sqlalchemy.palletsprojects.com/en/2.x/queries/#inserting-records
     return render_template("register.html")
 
@@ -118,9 +119,9 @@ def update_user(username):
     
 
 
-@app.route('/delete_user/<id>', methods=['DELETE'])
-def delete_user(id):
-    user = User.query.filter_by(id=id).first()
+@app.route('/delete_user/<username>', methods=['GET'])
+def delete_user(username):
+    user = User.query.filter_by(username=username).first()
     if user:
         db.session.delete(user)
         db.session.commit()
@@ -136,10 +137,10 @@ def delete_user(id):
 def user_post():
     title = request.form.get('title')
     content = request.form.get('content')
-    user_id = request.form.get('user_id')
-    user = User.query.filter_by(id=user_id).first()
+    username = request.form.get('username')
+    user = User.query.filter_by(username=username).first()
     if request.method == 'POST' and user is not None:
-        post = Post(title=title, content=content, user_id=user_id)
+        post = Post(title=title, content=content, user_id=user.id)
         db.session.add(post)
         db.session.commit()
         return redirect(url_for('home'))
@@ -156,7 +157,7 @@ def get_post(title):
 #https://docs.sqlalchemy.org/en/14/orm/quickstart.html
 #https://devsheet.com/code-snippet/like-query-sqlalchemy/
 
-@app.route('/search_post')
+@app.route('/search_post', methods=['POST', 'GET'])
 def search_post():
     title = request.form.get('title')
     post = Post.query.filter(Post.title.like(f'%{title}%')).order_by(Post.id.desc()).all()
@@ -165,7 +166,7 @@ def search_post():
     return render_template('get_post.html', post_details=post)
 
 
-@app.route('/delete_post/<id>/<user_id>', methods=['DELETE'])
+@app.route('/delete_post/<id>/<user_id>', methods=['GET'])
 def delete_post(id, user_id):
     post = Post.query.filter_by(id=id).first()
     user = User.query.filter_by(id=user_id).first()

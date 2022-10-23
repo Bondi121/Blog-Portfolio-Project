@@ -21,13 +21,13 @@
             <label for="content">Post Content:</label><br>
             <textarea id="content" name="content"></textarea>
 
-            <input type="number" id="user_id" name="user_id" hidden value="1">    <!-- value update using javascript -->
+            <input type="text" id="username" name="username" hidden value="">    <!-- value update using javascript -->
             <input type="submit" value="Submit">
 
         </form>
     </div>
 
-    <script src="{{url_for('static', filename='index.js')}}"></script>
+    <script src="{{url_for('static', filename='create_post.js')}}"></script>
 
 </body>
 </html>

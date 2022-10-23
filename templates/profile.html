@@ -27,6 +27,10 @@
                 <p class="email">Email: {{user_details.email}}</p>
             </section>
 
+            <div class="delete_item">
+                <a href="{{url_for('delete_user', username=user_details.username)}}" id="delete_user">Delete Account</a>
+            </div>
+
             <h2>User's posts</h2>
             <section>
                 {% for blog in blogs %}
@@ -34,6 +38,8 @@
                     <a href="{{url_for('get_post', title=blog.title) }}"><h2>{{blog.title}}</h2></a>
                     <p>Post created at: {{ moment(blog.date_posted).format('MMMM Do YYYY, h:mm a') }}.</p>
                 </article>
+                    <a href="{{url_for('delete_post', id=blog.id, user_id=user_details.id) }}"><button>Delete Post</button></a>
+                    <a href="{{url_for('update_post', id=blog.id) }}"><button>Update Post</button></a>
                 {% endfor %}
             </section>
 
