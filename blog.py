@@ -13,15 +13,49 @@ db.init_app(app)
 #Create your Flask application object, load any config, and then initialize the SQLAlchemy extension class with the application by calling db.init_app. This example connects to a SQLite database, which is stored in the app’s instance folder.
 #https://flask-sqlalchemy.palletsprojects.com/en/3.0.x/quickstart/#installation
 
+
+def get_file():
+    # class used for form submission
+    html_file = open("user_no_address.txt")
+    content = html_file.read()
+    html_file.close()
+    return content
+
+
+def write_note(text):
+    # function for write to file
+    file = open("user_no_address.txt", "a")
+    file.write("----\n")
+    file.write(f"<p> {text}</p>" + "\n")
+    file.close()
+
+
 class User(db.Model):
     #Creating user table schema
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
     username = db.Column(db.String, unique=True, nullable=False)
-    address = db.Column(db.String, unique=True, nullable=True)
+    address = db.Column(db.String, nullable=True)
     email = db.Column(db.String, unique=True, nullable=False)
+    
+    def user_details(self):
+        user_information = {
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "username": self.username,
+            "address": self.address,
+            "email": self.email,
+        }
+        return user_information
+    
+    def is_address(self):
+        if not self.address:
+            return True
+        else:
+            return False
 
+    
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
@@ -58,6 +92,8 @@ def register():
         user = User(first_name = firstname, last_name = lastname, username = username, email = email, address = address)
         db.session.add(user) 
         db.session.commit()
+        if user.is_address():
+            write_note(user.username)
         return redirect(url_for('login'))
         #https://flask-sqlalchemy.palletsprojects.com/en/2.x/queries/#inserting-records
     return render_template("register.html")
@@ -82,7 +118,7 @@ def user_profile(username):
         posts = Post.query.filter_by(user_id=user.id).all()
     if user is None:
         return redirect(url_for('home'))
-    return render_template("profile.html", user_details=user, blogs=posts)
+    return render_template("profile.html", user_details=user.user_details(), blogs=posts)
 
 
 @app.route('/check_user/<username>', methods=['GET'])
@@ -118,7 +154,6 @@ def update_user(username):
         return redirect (url_for('user_profile' , username=user.username))
     return render_template("user_update.html", user_details=user)
     
-
 
 @app.route('/delete_user/<username>', methods=['GET'])
 def delete_user(username):
@@ -195,6 +230,10 @@ def update_post(id):
         return redirect (url_for('get_post' , title = post.title))
     return render_template("post_update.html", post_details=post)
 
+@app.route('/no_address')
+def no_adress():
+    users = get_file()
+    return users
 
 #python -m venv venv
 #venv\Scripts\activate
