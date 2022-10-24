@@ -28,17 +28,19 @@
             </div>
         </nav> 
   
-        <form action="/search_post" method="post">
-            <label for="title">Search by Title:</label><br>
-            <input type="text" id="title" name="title"><br>
-            <button type="submit">Search</button>
+        <form action="/search_post" method="post" id="search_form">
+            <div class="field">
+                <label for="title">Search by Title:</label>
+                <input type="text" id="title" name="title">
+                <button class="button_submit" type="submit">Search</button>
+            </div>
         </form>
 
         <main>
-            <p>All the posts</p>
+            <h2 id="heading">All the posts:</h2>
 
             {% for blog in blogs %}
-            <article>
+            <article class="post">
                 
                 <a href="{{url_for('get_post', title=blog.title) }}"><h2>{{blog.title}}</h2></a>
                 <p>Post created at: {{ moment(blog.date_posted).format('MMMM Do YYYY, h:mm a') }}.</p>

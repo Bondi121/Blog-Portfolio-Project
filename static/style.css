@@ -33,6 +33,68 @@ nav {
     background-color: aquamarine;
 }
 
+#identity {
+  padding: 5px 8px;
+  min-width: 70px;
+}
+
+#search_form {
+  padding-bottom: 20px;
+}
+
+#search_form #title {
+  width: 50%;
+}
+
+#search_form button {
+  width: 80px;
+}
+
+#heading {
+  margin: 20px 0;
+}
+
+.post {
+  margin: 20px 0;
+  background-color: rgba(198, 198, 216, 0.45);
+  padding: 1em 0;
+  padding-left: 0.8em;
+}
+
+.post p {
+  margin-top: 10px;
+}
+
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: ghostwhite;
+  color: black;
+  text-align: center;
+}
+
+.field {
+  margin-bottom: 1.5rem;
+
+}
+
+.field input {
+  width: 50%;
+  height: 2rem;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.button_submit {
+  width: 100px;
+  padding: 0.6rem;
+}
+
+
+
 
 
 
