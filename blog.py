@@ -53,8 +53,9 @@ def register():
     lastname = request.form.get('lastname')
     username = request.form.get('username')
     email = request.form.get('email')
+    address = request.form.get('address')
     if request.method == 'POST':
-        user = User(first_name = firstname, last_name = lastname, username = username, email = email)
+        user = User(first_name = firstname, last_name = lastname, username = username, email = email, address = address)
         db.session.add(user) 
         db.session.commit()
         return redirect(url_for('login'))

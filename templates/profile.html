@@ -11,16 +11,20 @@
 <body>
     <div class="container">
         <nav>
-            <a href="/homepage">My Blog Website</a>
-            <a href="/create_post">create a new post </a>
-            <a href="/update_user" id="user_update">Edit my profile</a>
+            <div class="home_link">
+                <a href="/homepage">My Blog Website</a>
+            </div>
+
+            <div class="nav_link">
+                <a href="/create_post">Create a new post /</a>
+                <a href="/update_user" id="user_update">Edit my profile</a>
+            </div>
         </nav>
         <main>
         
             <h1>User profile page</h1>
             
-
-            <section>
+            <section id="user_details">
                 <p class="firstname">First name: {{user_details.first_name}}</p>
                 <p class="lastname">Last name: {{user_details.last_name}}</p>
                 <p class="address">Adress: {{user_details.address}}</p>
@@ -29,18 +33,20 @@
             </section>
 
             <div class="delete_item">
-                <a href="{{url_for('delete_user', username=user_details.username)}}" id="delete_user">Delete Account</a>
+                <a href="{{url_for('delete_user', username=user_details.username)}}" id="delete_user"><button id="delete_button">Delete Account</button></a>
             </div>
 
-            <h2>User's posts</h2>
+            <h2  id="user_post">User's posts</h2>
             <section>
                 {% for blog in blogs %}
-                <article>
+                <article class="post">
                     <a href="{{url_for('get_post', title=blog.title) }}"><h2>{{blog.title}}</h2></a>
                     <p>Post created at: {{ moment(blog.date_posted).format('MMMM Do YYYY, h:mm a') }}.</p>
                 </article>
-                    <a href="{{url_for('delete_post', id=blog.id, user_id=user_details.id) }}"><button>Delete Post</button></a>
-                    <a href="{{url_for('update_post', id=blog.id) }}"><button>Update Post</button></a>
+                    <div class="decide">
+                        <a href="{{url_for('delete_post', id=blog.id, user_id=user_details.id) }}"><button id="delete_button">Delete Post</button></a>
+                        <a href="{{url_for('update_post', id=blog.id) }}"><button id="update_button">Update Post</button></a>
+                    </div>
                 {% endfor %}
             </section>
 
