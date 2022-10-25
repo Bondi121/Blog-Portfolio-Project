@@ -41,6 +41,7 @@ class User(db.Model):
     
     def user_details(self):
         user_information = {
+            "id": self.id,
             "first_name": self.first_name,
             "last_name": self.last_name,
             "username": self.username,
