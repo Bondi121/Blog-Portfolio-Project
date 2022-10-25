@@ -25,32 +25,33 @@ The following packages was used in the project
 
 ## Project checklist
 - [X] It is avalaible on github, here is the link [blog web application] (github link)
-2. It use the flask framework : Yes.
-3. The below are the python module use in the project
-- datetime library
-- os library
-4. The following are the methods and properties used in the class
+2. [X] It use the flask framework : Yes.
+3. [X] The below are the python module use in the project
+    - datetime library
+    - os library
+4. [X] The following are the methods and properties used in the class
     - file name : blog.py
     - line number : 
     - Name of two properties :
-        - user.username 
-        - user.id 
+        - user.first_name (line 150)
+        - user.address (line 154) 
     - Name of two method :
-        - methods
-        - methods 
+        - user.is_address() (line 100)
+        - user.user_details() (line 125) 
 
-5. It make use javascript to save the username to localstorage 
-6. it uses modern javscript
-7. it contain conditional line statement 
+5. [X] It make use javascript to save the username to localstorage 
+6. [X] it uses modern javscript
+7. [X] It make use of writing to file and reading from file
+8. [X] it contain conditional line statement 
     - file name : blog.py 
         - line 56
         - line 74
 
-8. It make use of for loop in the jinja template engine in the html
+9. [X] It make use of for loop in the jinja template engine in the html
     - file name : index.html
         - line number : 43
 
-9. it allow user to enter text in the text box on the frontend 
-10. It does not generate error  
-11. Follow the code convention 
-12. All exercise is completed as the requirements. 
+10. [X] it allow user to enter text in the text box on the frontend 
+11. [X] It does not generate error  
+12. [X] Follow the code convention 
+13. [X] All exercise is completed as the requirements. 
