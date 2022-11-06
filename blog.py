@@ -116,7 +116,8 @@ def login():
         if user:
             return redirect(url_for('home'))
         if user is None:
-            return "No user found"
+            status = f"User not found"
+            return render_template("user_status.html", user_status=status)
     return render_template('login.html')
 
 
@@ -126,7 +127,8 @@ def user_profile(username):
     if user:
         posts = Post.query.filter_by(user_id=user.id).all()
     if user is None:
-        return redirect(url_for('home'))
+        status = f'User not found.'
+        return render_template ("user_status.html", user_status=status)
     return render_template("profile.html", user_details=user.user_details(), blogs=posts)
 
 
@@ -148,7 +150,8 @@ def update_user(username):
     address = request.form.get('address')
     user = User.query.filter_by(username=username).first()
     if user is None:
-        return redirect(url_for('home'))
+        status = f'User not found.'
+        return render_template("user_status.html", user_status=status)
     #https://flask-sqlalchemy.palletsprojects.com/en/2.x/queries/
     if request.method == 'POST': 
         if firstname is not None:
@@ -170,9 +173,11 @@ def delete_user(username):
     if user:
         db.session.delete(user)
         db.session.commit()
-        return "User deleted"
+        status = f'User {user.username} deleted'
+        return render_template ("user_status.html", user_status = status)
     else:
-        return "User not found"
+        status = "User not found"
+        return render_template ('user_status.html', user_status=status)
 
 
 #Posts Endpoints
@@ -207,7 +212,8 @@ def search_post():
     title = request.form.get('title')
     post = Post.query.filter(Post.title.like(f'%{title}%')).order_by(Post.id.desc()).all()
     if post is None:
-        return "no post is found"
+        status = f"Post not found"
+        return render_template("post_status.html", user_status=status)
     return render_template('get_post.html', post_details=post)
 
 
@@ -220,7 +226,8 @@ def delete_post(id, user_id):
         db.session.commit()
         return redirect(url_for('home')) 
     else:
-        return "Post not found"
+        status = f'post not found'
+        return render_template("post_status.html", user_status=status)
 
 
 @app.route('/update_post/<id>', methods=['POST', 'GET'])
