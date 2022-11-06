@@ -3,8 +3,11 @@ from flask import Flask, request, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 import os 
 from flask_moment import Moment
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
+cors = CORS(app)
+
 db = SQLAlchemy()
 basedir = os.path.abspath(os.path.dirname('1800 Final Project Blog Post'))
 app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///' + os.path.join(basedir, 'blog.sqlite')
@@ -35,9 +38,9 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
-    username = db.Column(db.String, unique=True, nullable=False)
+    username = db.Column(db.String, nullable=False)
     address = db.Column(db.String, nullable=True)
-    email = db.Column(db.String, unique=True, nullable=False)
+    email = db.Column(db.String, nullable=False)
     
     def user_details(self):
         user_information = {
@@ -75,6 +78,7 @@ with app.app_context():
 
 
 @app.route('/homepage')
+@app.route('/')
 def home():
     user_blogs = Post.query.order_by(Post.id.desc()).all()
     return render_template("index.html",blogs=user_blogs)
@@ -90,6 +94,10 @@ def register():
     email = request.form.get('email')
     address = request.form.get('address')
     if request.method == 'POST':
+        is_user_available = User.query.filter.by(username=username).first() or User.query.filter_by(email=email).first()
+        if is_user_available:
+            status = f"User already exists"
+            return render_template("user_status.html", user_status=status)
         user = User(first_name = firstname, last_name = lastname, username = username, email = email, address = address)
         db.session.add(user) 
         db.session.commit()
