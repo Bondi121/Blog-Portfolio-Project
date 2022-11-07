@@ -1,7 +1,7 @@
 from datetime import datetime
-from flask import Flask, request, render_template, redirect, url_for
+from flask import Flask, request, render_template, redirect, url_for, jsonify
 from flask_sqlalchemy import SQLAlchemy
-import os 
+import os
 from flask_moment import Moment
 from flask_cors import CORS, cross_origin
 
@@ -34,12 +34,12 @@ def write_note(text):
 
 
 class User(db.Model):
-    #Creating user table schema
+    # Creating user table schema
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
-    username = db.Column(db.String, nullable=False)
-    address = db.Column(db.String, nullable=True)
+    username = db.Column(db.String, nullable=False, unique=True)
+    address = db.Column(db.String, nullable=True, unique=True)
     email = db.Column(db.String, nullable=False)
     
     def user_details(self):
@@ -246,10 +246,6 @@ def update_post(id):
         return redirect (url_for('get_post' , title = post.title))
     return render_template("post_update.html", post_details=post)
 
-@app.route('/no_address')
-def no_adress():
-    users = get_file()
-    return users
 
 #python -m venv venv
 #venv\Scripts\activate
