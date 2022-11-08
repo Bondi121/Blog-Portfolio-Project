@@ -15,7 +15,3 @@ delete_user_button.addEventListener("click", function(){
 ) 
 
 enableUpdate();
-
-
-
-
