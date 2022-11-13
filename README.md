@@ -55,3 +55,7 @@ The following packages was used in the project
 11. [X] It does not generate error  
 12. [X] Follow the code convention 
 13. [X] All exercise is completed as the requirements. 
+
+
+#pip freeze > requirements.txt
+#pip install -r requirements.txt

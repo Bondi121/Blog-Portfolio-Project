@@ -136,5 +136,15 @@ footer {
   padding: 10px;
 }
 
+#post_title {
+  padding: 1rem 0;
+}
+
+small {
+  font-weight: bold;
+  font-size: medium;
+}
+
+
 
 

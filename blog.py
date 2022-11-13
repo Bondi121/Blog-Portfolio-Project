@@ -41,8 +41,8 @@ class User(db.Model):
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
     username = db.Column(db.String, nullable=False, unique=True)
-    address = db.Column(db.String, nullable=True, unique=True)
-    email = db.Column(db.String, nullable=False)
+    address = db.Column(db.String, nullable=True)
+    email = db.Column(db.String, nullable=False, unique=True)
 
     def user_details(self):
         user_information = {
@@ -66,8 +66,7 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
     content = db.Column(db.String, nullable=False)
-    date_posted = db.Column(
-        db.DateTime, default=datetime.utcnow, nullable=False)
+    date_posted = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     user_id = db.Column(db.Integer, nullable=False)
 
 # Define Models
@@ -98,8 +97,7 @@ def register():
     address = request.form.get('address')
     if request.method == 'POST':
         # check if the any user in the database is using either the email or username
-        is_user_available = User.query.filter_by(
-            username=username).first() or User.query.filter_by(email=email).first()
+        is_user_available = User.query.filter_by(username=username).first() or User.query.filter_by(email=email).first()
 
         # if is_user_available is found in the database, return the user_status page on the browser.
         if is_user_available:
@@ -192,6 +190,7 @@ def update_user(username):
 def delete_user(username):
     user = User.query.filter_by(username=username).first()
     if user:
+        posts = Post.query.filter(Post.user_id == user.id).delete()
         db.session.delete(user)
         db.session.commit()
         status = f'User {user.username} deleted'
