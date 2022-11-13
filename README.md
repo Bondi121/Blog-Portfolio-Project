@@ -11,7 +11,7 @@ The project have the following feeatures
 1. User can create account 
 2. User can login with username only  
 3. User can delete their account 
-4. User can Update thier account 
+4. User can update thier account 
 5. User can update thier post 
 6. User can delete thier post
 7. User can search for a post by title
@@ -25,7 +25,7 @@ The following packages was used in the project
 
 ## Project checklist
 - [X] It is avalaible on github, here is the link [blog web application] (github link)
-2. [X] It use the flask framework : Yes.
+2. [X] It uses the flask framework : Yes.
 3. [X] The below are the python module use in the project
     - datetime library
     - os library
@@ -33,27 +33,27 @@ The following packages was used in the project
     - file name : blog.py
     - line number : 
     - Name of two properties :
-        - user.first_name (line 150)
-        - user.address (line 154) 
+        - user.first_name (line 177)
+        - user.address (line 180) 
     - Name of two method :
-        - user.is_address() (line 100)
-        - user.user_details() (line 125) 
+        - user.is_address() (line 115)
+        - user.user_details() (line 148) 
 
-5. [X] It make use javascript to save the username to localstorage 
+5. [X] It makes use javascript to save the username to localstorage 
 6. [X] it uses modern javscript
-7. [X] It make use of writing to file and reading from file
-8. [X] it contain conditional line statement 
+7. [X] It makes use of writing to file and reading from file
+8. [X] it contains conditional line statement 
     - file name : blog.py 
-        - line 56
-        - line 74
+        - line 98
+        - line 103
 
-9. [X] It make use of for loop in the jinja template engine in the html
+9. [X] It makes use of for loop in the jinja template engine in the html
     - file name : index.html
-        - line number : 43
+        - line number : 42
 
-10. [X] it allow user to enter text in the text box on the frontend 
+10. [X] it allows user to enter text in the text box on the frontend 
 11. [X] It does not generate error  
-12. [X] Follow the code convention 
+12. [X] Follows the code convention 
 13. [X] All exercise is completed as the requirements. 
 
 
