@@ -3,10 +3,10 @@ from flask import Flask, request, render_template, redirect, url_for, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import os
 from flask_moment import Moment
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 
 app = Flask(__name__)
-cors = CORS(app)
+CORS(app,  origins=["http://127.0.0.1:5000"])
 
 db = SQLAlchemy()
 basedir = os.path.abspath(os.path.dirname('1800 Final Project Blog Post'))
@@ -134,6 +134,10 @@ def login():
             return render_template("user_status.html", user_status=status)
     return render_template('login.html')
 
+@app.route('/not_found')
+def user_not_found():
+    status = f'User not found.'
+    return render_template("user_status.html", user_status=status)
 
 @app.route('/profile/<username>', methods=['GET'])
 def user_profile(username):
@@ -146,8 +150,7 @@ def user_profile(username):
     return render_template("profile.html", user_details=user.user_details(), blogs=posts)
 
 
-@app.route('/check_user/<username>', methods=['POST'])
-@cross_origin()
+@app.route('/check_user/<username>', methods=['GET'])
 def check_user(username):
     user = User.query.filter_by(username=username).first()
     if user:
@@ -206,8 +209,16 @@ def user_post():
     title = request.form.get('title')
     content = request.form.get('content')
     username = request.form.get('username')
+    print(username)
     user = User.query.filter_by(username=username).first()
+    # print(user)
+
     if request.method == 'POST' and user is not None:
+
+        if not user:
+            status = "User not found"
+            return render_template('user_status.html', user_status=status)
+
         post = Post(title=title, content=content, user_id=user.id)
         db.session.add(post)
         db.session.commit()
@@ -234,7 +245,6 @@ def search_post():
     title = request.form.get('title')
     post = Post.query.filter(Post.title.like(
         f'%{title}%')).order_by(Post.id.desc()).all()
-    print(post)
     if not post:
         status = f'Post not found'
         return render_template("post_status.html", user_status=status)
