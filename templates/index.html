@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css')}}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css')}}"> <!--This {{ url_for('static',filename='style.css')}} helps to link the css to html. The static is the folder the css is located, filename point to the css file-->
     <title>Blog post</title>
-    {{ moment.include_moment() }}
+    {{ moment.include_moment() }} <!--This part helps to enable the moment to render the date and time-->
 </head>
 <body>
     <div class="container">
@@ -28,7 +28,7 @@
             </div>
         </nav> 
   
-        <form action="/search_post" method="post" id="search_form">
+        <form action="/search_post" method="post" id="search_form"> <!--This part for search a post using title, will send a request to the route on the backend on line 326 along with the title typed in the search bar. -->
             <div class="field">
                 <label for="title">Search by Title:</label>
                 <input type="text" id="title" name="title">
@@ -39,12 +39,13 @@
         <main>
             <h2 id="heading">All the posts:</h2>
 
+            <!-- The part of the code help to render each post sent from the database as list when iterating it.  -->
             {% for blog in blogs %}
-            <article class="post">
-                
-                <a href="{{url_for('get_post', title=blog.title) }}"><h2>{{blog.title}}</h2></a>
-                <p>Post created at: {{ moment(blog.date_posted).format('MMMM Do YYYY, h:mm a') }}.</p>
-            </article>
+                <article class="post">
+                    
+                    <a href="{{url_for('get_post', title=blog.title) }}"><h2>{{blog.title}}</h2></a> <!-- The url_for help to create a link that will send request to the backend gt_post route in line 309 -->
+                    <p>Post created at: {{ moment(blog.date_posted).format('MMMM Do YYYY, h:mm a') }}.</p> <!-- The moment {{ moment(blog.date_posted).format('MMMM Do YYYY, h:mm a') }} helps to render the date and time the post was created  -->
+                </article>
             {% endfor %}
             
     <!--
@@ -59,7 +60,7 @@
         </footer>
     </div>
 
-    <script src="{{url_for('static', filename='index.js')}}"></script>
+    <script src="{{url_for('static', filename='index.js')}}"></script> <!--Linking the javascrit file to the html file-->
 
 </body>
 </html>

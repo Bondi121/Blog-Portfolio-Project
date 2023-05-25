@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css')}}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css')}}"> <!--This {{ url_for('static',filename='style.css')}} helps to link the css to html. The static is the folder the css is located, filename point to the css file-->
     <title>User Update</title>
 </head>
 <body>
@@ -14,28 +14,28 @@
         </nav>
         <main>
             <section>
-                <form action="{{url_for('update_user', username=user_details.username) }}" method="post">
+                <form action="{{url_for('update_user', username=user_details.username) }}" method="post"> <!-- The action= action="{{url_for('update_user', username=user_details.username) }}" create a link where the form will be send to when submit. The method specify the the type of method expected to be sent to backend as well.-->
 
                     <label for="firstname_update">First name</label><br>
-                    <input type="text" id="firstname_update" name="firstname" value="{{user_details.first_name}}"><br>
+                    <input type="text" id="firstname_update" name="firstname" value="{{user_details.first_name}}"><br> <!--This part {{user_details.first_name}} is dispalying the first_name of the user-->
 
                     <label for="lastname_update">Last name</label><br>
-                    <input type="text" id="lastname_update" name="lastname" value="{{user_details.last_name}}"><br>
+                    <input type="text" id="lastname_update" name="lastname" value="{{user_details.last_name}}"><br> <!--This part {{user_details.last_name}} is dispalying the last_name of the user-->
 
                     <label for="address_update">Address</label><br>
-                    <input type="text" id="address_update" name="address" value="{{user_details.address}}"><br>
+                    <input type="text" id="address_update" name="address" value="{{user_details.address}}"><br> <!--This part {{user_details.address}} is dispalying the address of the user-->
 
                     <label for="email_update">Email</label><br>
-                    <input type="text" id="email_update" name="email" value="{{user_details.email}}"><br><br>
+                    <input type="text" id="email_update" name="email" value="{{user_details.email}}"><br><br>  <!--This part {{user_details.email}} is dispalying the email of the user-->
 
-                    <input type="submit" value="Save">
+                    <input type="submit" value="Save"> 
                     
                 </form>
             </section>
         </main>
     </div>
 
-    <script src="{{url_for('static', filename='user_update.js')}}"></script>
+    <script src="{{url_for('static', filename='user_update.js')}}"></script> <!--Linking the javascrit file to the html file-->
 
     
 </body>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css')}}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css')}}">  <!--This {{ url_for('static',filename='style.css')}} helps to link the css to html. The static is the folder the css is located, filename point to the css file-->
     <title>Profile page</title>
 </head>
 <body>
@@ -16,7 +16,7 @@
         </nav>
 
         <main>
-            <p>User status : {{user_status}}</p>
+            <p>User status : {{user_status}}</p> <!--This  {{user_status}} help to render or display the user_status sent from the backend. The user_status is just a variable holding a value which will be display on the html file. -->
         </main>
     </div>
     

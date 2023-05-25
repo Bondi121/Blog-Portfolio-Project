@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css')}}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css')}}"> <!--This {{ url_for('static',filename='style.css')}} helps to link the css to html. The static is the folder the css is located, filename point to the css file-->
     <title>Creating Post</title>
 </head>
 <body>
@@ -22,7 +22,7 @@
                     <label for="content">Post Content:</label><br>
                     <textarea id="content" name="content"></textarea>
                 </div>
-                <input type="text" id="username" name="username" hidden>    <!-- value update using javascript -->
+                <input type="text" id="username" name="username" hidden>    <!-- value update using javascript. The username will be get from localstorage and filled with javascirpt -->
                 <input type="submit" value="Submit" class="button_submit">
             </form>
         </div>
@@ -32,7 +32,7 @@
         <p>Created by Gabriel</p>
     </footer>
 
-    <script src="{{url_for('static', filename='create_post.js')}}"></script>
+    <script src="{{url_for('static', filename='create_post.js')}}"></script> <!--Linking the javascrit file to the html file-->
 
 </body>
 </html>

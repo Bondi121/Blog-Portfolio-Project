@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css')}}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css')}}"> <!--This {{ url_for('static',filename='style.css')}} helps to link the css to html. The static is the folder the css is located, filename point to the css file-->
     <title>Profile page</title>
-    {{ moment.include_moment() }}
+    {{ moment.include_moment() }} <!--This part helps to enable the moment to render the date and time-->
 </head>
 <body>
     <div class="container">
@@ -25,27 +25,28 @@
             <h1>User profile page</h1>
             
             <section id="user_details">
-                <p class="firstname">First name: {{user_details.first_name}}</p>
-                <p class="lastname">Last name: {{user_details.last_name}}</p>
-                <p class="address">Adress: {{user_details.address}}</p>
-                <p class="username">Username: {{user_details.username}}</p>
-                <p class="email">Email: {{user_details.email}}</p>
+                <p class="firstname">First name: {{user_details.first_name}}</p> <!--This part {{user_details.first_name}} is dispalying the first_name of the user-->
+                <p class="lastname">Last name: {{user_details.last_name}}</p>  <!--This part {{user_details.last_name}} is dispalying the last_name of the user-->
+                <p class="address">Adress: {{user_details.address}}</p>  <!--This part {{user_details.address}} is dispalying the address of the user-->
+                <p class="username">Username: {{user_details.username}}</p>  <!--This part {{user_details.username}} is dispalying the username of the user-->
+                <p class="email">Email: {{user_details.email}}</p>  <!--This part {{user_details.email}} is dispalying the email of the user-->
             </section>
 
             <div class="delete_item">
-                <a href="{{url_for('delete_user', username=user_details.username)}}" id="delete_user"><button id="delete_button">Delete Account</button></a>
+                <a href="{{url_for('delete_user', username=user_details.username)}}" id="delete_user"><button id="delete_button">Delete Account</button></a> <!-- The url_for help to create a link that will send request to the backend delete_user route in line 257 -->
             </div>
 
             <h2  id="user_post">User's posts</h2>
+            
             <section>
-                {% for blog in blogs %}
+                {% for blog in blogs %} <!--The blogs in this line is a list which contain the posts of the user. The for loop helps to loop through the blogs -->
                 <article class="post">
-                    <a href="{{url_for('get_post', title=blog.title) }}"><h2>{{blog.title}}</h2></a>
-                    <p>Post created at: {{ moment(blog.date_posted).format('MMMM Do YYYY, h:mm a') }}.</p>
+                    <a href="{{url_for('get_post', title=blog.title)}}"><h2>{{blog.title}}</h2></a> <!-- The url_for help to create a link that will send request to the backend get_post route in line 309 -->
+                    <p>Post created at: {{ moment(blog.date_posted).format('MMMM Do YYYY, h:mm a') }}.</p> <!-- The moment {{ moment(blog.date_posted).format('MMMM Do YYYY, h:mm a') }} helps to render the date and time the post was created  -->
                 </article>
                     <div class="decide">
-                        <a href="{{url_for('delete_post', id=blog.id, user_id=user_details.id) }}"><button id="delete_button">Delete Post</button></a>
-                        <a href="{{url_for('update_post', id=blog.id) }}"><button id="update_button">Update Post</button></a>
+                        <a href="{{url_for('delete_post', id=blog.id, user_id=user_details.id) }}"><button id="delete_button">Delete Post</button></a> <!-- The url_for help to create a link that will send request to the backend delete_post  route in line 343 -->
+                        <a href="{{url_for('update_post', id=blog.id) }}"><button id="update_button">Update Post</button></a> <!-- The url_for help to create a link that will send request to the backend update_post route in line 361 -->
                     </div>
                 {% endfor %}
             </section>
@@ -53,7 +54,7 @@
         </main>
     </div>
 
-    <script src="{{url_for('static', filename='user_profile.js')}}"></script>
+    <script src="{{url_for('static', filename='user_profile.js')}}"></script> <!--Linking the javascrit file to the html file-->
 
 </body>
 </html>
